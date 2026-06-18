@@ -1,2 +1,2 @@
 # Learning-Go
-Dedicated Repository to document my Go Learning Journey
+Respository for docmumenting my  Go Learning Journey and Projects.
