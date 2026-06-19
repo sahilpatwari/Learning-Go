@@ -3,44 +3,18 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
+	"flag"
 )
 
 func main() {
-	s := os.Args
-
-	if len(s) == 2 && s[1] == "help" {
-		fmt.Println("List of Commands:")
-		fmt.Println("add : To add two numbers")
-		fmt.Println("sub : To subtract two numbers")
-		fmt.Println("multiply : To multiply two numbers")
-		fmt.Println("divide : To divide two numbers")
-		fmt.Println("Command Syntax :")
-		fmt.Println("[Executable] [Command] [number1] [number2]")
-		fmt.Println("Example : ./a.exe add 2 3")
-		return
-	}
-
-	if len(s) != 4 {
-		fmt.Printf("Undefined Command! Please use help to get the list of commands")
-		return
-	}
     
-
-	num1, err1 := strconv.Atoi(s[2])
-	num2, err2 := strconv.Atoi(s[3])
-	if err1 != nil {
-		fmt.Println("Error: ",err1)
-		return
-	}
-
-	if err2 != nil {
-		fmt.Println("Error: ",err2)
-		return
-	}
+	var opFlag = flag.String("op","undefined","Operations allowed : add, sub, multiply, divide")
+	var numFlag1 = flag.Int("num1",0,"First Number")
+	var numFlag2 = flag.Int("num2",0,"Second Number")
     
-	switch s[1] {
+	flag.Parse()
+	op , num1 , num2 := *opFlag , *numFlag1 , *numFlag2
+	switch op {
 	case "add":
 		fmt.Printf("Sum : %v", num1 + num2)
 	case "sub":
