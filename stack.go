@@ -58,7 +58,12 @@ func main() {
 	fmt.Scanf("%d",&capacity)
 
 	var stack *Stack = new(Stack)
-	stack_init(stack,capacity)
+	_ , err := stack_init(stack,capacity)
+
+	if err != nil {
+		fmt.Print("Error : ",err)
+		return
+	}
 	
 	for {
 		fmt.Printf("\npush , pop or top??\n")
