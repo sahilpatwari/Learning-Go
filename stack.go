@@ -1,20 +1,28 @@
 //Simple Program to implement Stack Data Structure in Go
-
+//Update : Moved from simple functions to Methods and Interfaces
 package main
 
 import(
 	"errors"
 	"fmt"
 )
+
 type Stack struct {
 	arr []int 
 	top int
 }
 
+type StackInterface interface {
+	stack_init(capacity int) (int , error)
+	push(val int) (int , error)
+	pop()  (int , error)
+	top_value()  (int , error)
+}
+
 var MAX_CAPACITY = 4096
 
 //Capacity Value should not exceed 4096(Max Limit fot the Stack)
-func stack_init(stack *Stack , capacity int) (int , error) {
+func (stack *Stack) stack_init(capacity int) (int , error) {
 	if capacity > MAX_CAPACITY {
 		return -1 , errors.New("Stack size exceeds Maximum Allowed Capacity!")
 	}
@@ -24,7 +32,7 @@ func stack_init(stack *Stack , capacity int) (int , error) {
 	return 0 , nil
 }
 
-func push(stack *Stack , val int) (int , error) {
+func (stack *Stack) push(val int) (int , error) {
 	if stack.top == len(stack.arr) - 1 {
 		return -1 , errors.New("Stack is Full! Push Operation Not Possible!")
 	}
@@ -34,7 +42,7 @@ func push(stack *Stack , val int) (int , error) {
 	return 0 , nil
 }
 
-func pop(stack *Stack) (int , error) {
+func (stack *Stack) pop() (int , error) {
 	if stack.top == -1 {
 		return -1 , errors.New("Stack is Empty! Pop Operation Not Possible")
 	} 
@@ -44,7 +52,7 @@ func pop(stack *Stack) (int , error) {
 	return val, nil
 }
 
-func top(stack *Stack) (int , error) {
+func (stack *Stack) top_value() (int , error) {
 	if stack.top == -1 {
 		return -1 , errors.New("Stack is Empty! Top Operation Not Possible")
 	}
@@ -58,7 +66,10 @@ func main() {
 	fmt.Scanf("%d",&capacity)
 
 	var stack *Stack = new(Stack)
-	_ , err := stack_init(stack,capacity)
+	var st StackInterface
+
+	st = stack
+	_ , err := st.stack_init(capacity)
 
 	if err != nil {
 		fmt.Print("Error : ",err)
@@ -73,7 +84,7 @@ func main() {
 			fmt.Printf("Enter value : ")
 			var val int
 			fmt.Scanf("%d",&val)
-			_ , err := push(stack,val)
+			_ , err := st.push(val)
 
 			if err != nil {
 				fmt.Println("Error : ",err)
@@ -82,7 +93,7 @@ func main() {
             
 			fmt.Printf("%d pushed onto stack",val)
 		} else if op == "pop" {
-			ret , err := pop(stack)
+			ret , err := st.pop()
 
 			if err != nil {
 				fmt.Println("Error : ",err)
@@ -91,7 +102,7 @@ func main() {
 
 			fmt.Printf("%d popped from stack",ret)
 		} else if op == "top" {
-			ret , err := top(stack)
+			ret , err := st.top_value()
 
 			if err != nil {
 				fmt.Println("Error : ",err)
