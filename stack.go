@@ -79,11 +79,11 @@ func main() {
 	for {
 		fmt.Printf("\npush , pop or top??\n")
 		var op string
-		fmt.Scanf("%s",&op)
+		fmt.Scanf("%s\n",&op)
 		if op == "push" {
 			fmt.Printf("Enter value : ")
 			var val int
-			fmt.Scanf("%d",&val)
+			fmt.Scanf("%d\n",&val)
 			_ , err := st.push(val)
 
 			if err != nil {
